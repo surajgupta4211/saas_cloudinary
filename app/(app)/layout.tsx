@@ -38,15 +38,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="flex min-h-screen"> {/* ✅ Sidebar takes full height */}
-      {/* Sidebar - Full Height */}
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
       <div className="bg-base-200 w-64 flex flex-col justify-between min-h-screen">
-        {/* Sidebar Header */}
-        <div className="flex items-center justify-center py-4">
-          <ImageIcon className="w-10 h-10 text-primary" />
-        </div>
-
-        {/* Sidebar Menu Items */}
         <ul className="menu p-4 w-full text-base-content flex-grow space-y-2">
           {sidebarItems.map((item) => (
             <li key={item.href}>
@@ -77,34 +71,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
-        <header className="w-full bg-base-200">
-          <div className="navbar max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between">
-            <label htmlFor="sidebar-drawer" className="btn btn-square btn-ghost lg:hidden">
-              <MenuIcon />
-            </label>
-            <Link href="/" className="btn btn-ghost normal-case text-2xl font-bold tracking-tight">
-              Cloudinary Showcase
-            </Link>
-            {user && (
-              <div className="flex items-center space-x-4">
-                <div className="avatar">
-                  <div className="w-8 h-8 rounded-full">
-                    <img src={user.imageUrl} alt={user.username || user.emailAddresses[0].emailAddress} />
-                  </div>
-                </div>
-                <span className="text-sm truncate max-w-xs lg:max-w-md">
-                  {user.username || user.emailAddresses[0].emailAddress}
-                </span>
-              </div>
-            )}
-          </div>
-        </header>
-
         {/* Page Content */}
-        <main className="flex-grow p-6">
-          {children}
-        </main>
+        <main className="flex-grow p-6">{children}</main>
       </div>
     </div>
   );

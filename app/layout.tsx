@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider, SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,10 +17,28 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          {/* Updated header for right-aligned User Button */}
+          <header className="flex justify-between items-center p-4 bg-gray-900 text-white">
+            {/* Left Side - Title */}
+            <h1 className="text-2xl font-bold">Cloudinary Showcase</h1>
 
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+            {/* Right Side - Login/Logout Buttons */}
+            <div className="flex gap-4 items-center">
+              <SignedOut>
+                <SignInButton />
+                <SignUpButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
+          </header>
+
+          {children}
+        </body>
+      </html>
     </ClerkProvider>
   );
 }
