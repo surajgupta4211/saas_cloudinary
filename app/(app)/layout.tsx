@@ -11,6 +11,7 @@ import {
   Share2Icon,
   UploadIcon,
   ImageIcon,
+  SearchIcon, // ✅ AI Content Analysis Icon
   Wand2Icon, // ✅ AI Background Removal Icon
   UserIcon // ✅ Face Detection Icon
 } from "lucide-react";
@@ -21,9 +22,12 @@ const sidebarItems = [
   { href: "/social-share", icon: Share2Icon, label: "Social Share" },
   { href: "/video-upload", icon: UploadIcon, label: "Video Upload" },
   { href: "/image-transformation", icon: ImageIcon, label: "Image Transformation" },
-  { href: "/background-removal", icon: Wand2Icon, label: "Background Removal" },
+  // { href: "/background-removal", icon: Wand2Icon, label: "Background Removal" },
+  { href: "/color-enhancement", icon: ImageIcon, label: "AI Auto Color" }, // ✅ New Feature Added
   { href: "/face-detection", icon: UserIcon, label: "Face Detection" }, // 🔥 Face Detection Feature
-  { href: "/auto-tagging", icon: ImageIcon, label: "AI Auto-Tagging" }, // 🔥 Auto-Tagging Feature
+  // { href: "/auto-tagging", icon: ImageIcon, label: "AI Auto-Tagging" }, // 🔥 Auto-Tagging Feature
+  //{ href: "/content-analysis", icon: SearchIcon, label: "AI Content Analysis" }, // ✅ New Feature Added
+
 ];
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
