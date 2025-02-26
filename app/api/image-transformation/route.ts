@@ -22,7 +22,19 @@ export async function POST(request: NextRequest) {
         const transformations = JSON.parse(formData.get("transformations") as string || "[]");
 
         if (!file) {
-            return NextResponse.json({ error: "File not found" }, { status: 400 });
+            return NextResponse.json({ error: "File not found. Please upload an image." }, { status: 400 });
+        }
+
+        // ✅ File type validation (Only allow JPEG & PNG)
+        const allowedMimeTypes = ["image/jpeg", "image/png"];
+        if (!allowedMimeTypes.includes(file.type)) {
+            return NextResponse.json({ error: "Invalid file format. Only JPEG and PNG are allowed." }, { status: 400 });
+        }
+
+        // ✅ Check file size (Max 5MB)
+        const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+        if (file.size > MAX_FILE_SIZE) {
+            return NextResponse.json({ error: "File size too large. Max allowed size is 5MB." }, { status: 400 });
         }
 
         const bytes = await file.arrayBuffer();
@@ -40,7 +52,7 @@ export async function POST(request: NextRequest) {
             uploadStream.end(buffer);
         });
 
-        const { public_id, secure_url } = uploadResult as any; // ✅ Cloudinary image URL
+        const { public_id, secure_url } = uploadResult as any;
 
         if (!public_id) {
             return NextResponse.json({ error: "Upload failed" }, { status: 500 });
@@ -48,7 +60,7 @@ export async function POST(request: NextRequest) {
 
         // ✅ Apply Transformations
         const transformedUrl = cloudinary.url(public_id, {
-            secure: true, // Ensures HTTPS URL
+            secure: true,
             transformation: transformations
         });
 

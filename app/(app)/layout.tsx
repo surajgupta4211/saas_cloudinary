@@ -13,7 +13,9 @@ import {
   ImageIcon,
   SearchIcon, // ✅ AI Content Analysis Icon
   Wand2Icon, // ✅ AI Background Removal Icon
-  UserIcon // ✅ Face Detection Icon
+  UserIcon, // ✅ Face Detection Icon
+  ShrinkIcon // ✅ Alternative Icon for Compression
+
 } from "lucide-react";
 
 // ✅ Sidebar Menu (Now Fully Vertical)
@@ -27,6 +29,7 @@ const sidebarItems = [
   { href: "/face-detection", icon: UserIcon, label: "Face Detection" }, // 🔥 Face Detection Feature
   // { href: "/auto-tagging", icon: ImageIcon, label: "AI Auto-Tagging" }, // 🔥 Auto-Tagging Feature
   //{ href: "/content-analysis", icon: SearchIcon, label: "AI Content Analysis" }, // ✅ New Feature Added
+  { href: "/image-compression", icon: ShrinkIcon, label: "Image Compression" }, // 🔥 Fixed Icon
 
 ];
 

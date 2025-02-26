@@ -40,7 +40,7 @@ const socialFormats = {
                 body: formData
             })
 
-            if(!response.ok) throw new Error("Failed to upload image");
+            if(!response.ok) throw new Error("Failed to upload image Invalid Formate");
 
             const data = await response.json();
             setUploadedImage(data.publicId);
@@ -48,7 +48,7 @@ const socialFormats = {
 
         } catch (error) {
             console.log(error)
-            alert("Failed to upload image");
+            alert("Failed to upload image Invalid Formate");
         } finally{
             setIsUploading(false);
         }

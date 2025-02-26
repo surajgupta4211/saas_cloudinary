@@ -24,6 +24,18 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: "No file provided" }, { status: 400 });
         }
 
+        // ✅ File type validation (Ensure only images are uploaded)
+        const validMimeTypes = ["image/jpeg", "image/png", "image/webp"];
+        if (!validMimeTypes.includes(file.type)) {
+            return NextResponse.json({ error: "Invalid file format. Please upload an image." }, { status: 400 });
+        }
+
+        // ✅ File size validation (Rejects files >5MB)
+        const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+        if (file.size > MAX_FILE_SIZE) {
+            return NextResponse.json({ error: "File size too large. Max size is 5MB." }, { status: 400 });
+        }
+
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
@@ -45,9 +57,21 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: "Upload failed" }, { status: 500 });
         }
 
+        // ✅ Detect Faces Before Cropping
+        const faceDetectionResult = await cloudinary.api.resource(public_id, {
+            faces: true // Enables face detection
+        });
+
+        const facesDetected = faceDetectionResult?.faces?.length ?? 0;
+
+        if (facesDetected === 0) {
+            // ❌ No faces detected, return error
+            return NextResponse.json({ error: "No faces detected. Please upload an image with a face." }, { status: 400 });
+        }
+
         // ✅ Apply Smart Cropping & Face Detection
         const transformedUrl = cloudinary.url(public_id, {
-            secure: true, // Ensures HTTPS URL
+            secure: true,
             crop: "thumb",
             gravity: "face", // AI detects faces and centers them
             width: 300,
